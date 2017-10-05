@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
@@ -12,7 +11,6 @@ public class heapSort {
 
 	public heapSort() {
 		heap_size = 0;
-
 		A = new Node[1024]; // heap배열의 기본크기
 	}
 
@@ -31,7 +29,6 @@ public class heapSort {
 		// fileReader
 		Scanner scanner = new Scanner(System.in);
 		String filepath = "input2.txt";
-
 		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(filepath), "euc-kr"));
 		StringTokenizer st;
 		String line = in.readLine();
@@ -40,7 +37,6 @@ public class heapSort {
 			st = new StringTokenizer(line, ", ");
 			int priority = Integer.parseInt(st.nextToken());
 			String subject = st.nextToken();
-
 			Node node = h.new Node(priority, subject);
 			h.insert(A, node);
 			line = in.readLine();
@@ -60,13 +56,11 @@ public class heapSort {
 			if (select == 1) {
 				System.out.println("신규 작업명 (20 Bytes 이내) : ");
 				String newsub = scanner.nextLine();
-
 				newsub = scanner.nextLine();
 				System.out.println("우선 순위 (0~999) : ");
 				int newpri = scanner.nextInt();
 				Node node = h.new Node(newpri, newsub);
 				h.insert(A, node);
-
 				System.out.println("**** 작업 추가 완료 ****");
 			}
 			// 최대값
@@ -100,7 +94,6 @@ public class heapSort {
 			select = scanner.nextInt();
 		}
 		System.out.println("**** 프로그램 종료 ****");
-
 	}
 
 	private void BULIDMAXHEAP(Node[] A) {
