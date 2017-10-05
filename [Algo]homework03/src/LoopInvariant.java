@@ -11,6 +11,7 @@ public class LoopInvariant {
 		// 초기조건 (Initialization)
 		// 유지 조건 (Maintenance)
 		// 종료 조건 (Termination)
+		LoopInvariant li = new LoopInvariant();
 		int[][] initA = new int[10000][2];
 		Scanner Scanner = new Scanner(System.in);
 
@@ -30,13 +31,47 @@ public class LoopInvariant {
 		int[][] sortA = new int[i][2];
 		System.arraycopy(initA, 0, A, 0, i);
 
-		mergeSort(A, sortA, 0, i - 1);
-		System.out.println("찾고자 하는 수 x는 표준입력을 사용하여 직접 입력");
-		int find = Scanner.nextInt();
+		li.mergeSort(A, sortA, 0, i - 1);
+		// System.out.println("찾고자 하는 수 x는 표준입력을 사용하여 직접 입력");
+		// int find = Scanner.nextInt();
 
+		double leftmin = li.leftDistance(A, 0, 1, Math.sqrt(Math.pow((A[1][0] - A[0][0]), 2) + Math.pow((A[1][1] - A[0][1]), 2)));
+		double rightmin = li.rightDistance(A, A.length / 2, (A.length / 2) + 1,
+				Math.sqrt(Math.pow((A[A.length - 1][0] - A[A.length - 2][0]), 2)
+						+ Math.pow((A[A.length - 1][1] - A[A.length - 2][1]), 2)));
 	}
 
-	public static void mergeSort(int[][] a, int[][] sortA, int left, int right) {
+	private double leftDistance(int[][] A, int i, int j, double min) {
+		double distance = Math.sqrt(Math.pow((A[i][0] - A[j][0]), 2) + Math.pow((A[i][1] - A[j][1]), 2));
+		if (min > distance) {
+			min = distance;
+		}
+		if (i >= (A.length / 2) - 1) {
+			return min;
+		} else if (j >= (A.length / 2) - 1) {
+			leftDistance(A, ++i, i + 1, min);
+		} else {
+			leftDistance(A, i, ++j, min);
+		}
+		return min;
+	}
+
+	private double rightDistance(int[][] A, int i, int j, double min) {
+		double distance = Math.sqrt(Math.pow((A[i][0] - A[j][0]), 2) + Math.pow((A[i][1] - A[j][1]), 2));
+		if (min > distance) {
+			min = distance;
+		}
+		if (i >= A.length - 2) {
+			return min;
+		} else if (j >= A.length - 1) {
+			rightDistance(A, ++i, i + 1, min);
+		} else {
+			rightDistance(A, i, ++j, min);
+		}
+		return min;
+	}
+
+	private void mergeSort(int[][] a, int[][] sortA, int left, int right) {
 		int middle;
 		if (left < right) {
 			middle = (left + right) / 2;
@@ -46,7 +81,7 @@ public class LoopInvariant {
 		}
 	}
 
-	public static void merge(int[][] a, int[][] sortA, int left, int middle, int right) {
+	private void merge(int[][] a, int[][] sortA, int left, int middle, int right) {
 		int i = left;
 		int j = middle + 1;
 		int k = left;
