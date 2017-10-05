@@ -11,23 +11,72 @@ public class LoopInvariant {
 		// 초기조건 (Initialization)
 		// 유지 조건 (Maintenance)
 		// 종료 조건 (Termination)
-		int[][] A = new int[10][2];
+		int[][] initA = new int[10000][2];
 		Scanner Scanner = new Scanner(System.in);
+
 		String fp = "closest+data\\closest_data.txt";
 		FileInputStream fis = new FileInputStream(fp);
 		InputStreamReader isr = new InputStreamReader(fis, "euc-kr");
 		BufferedReader br = new BufferedReader(isr);
 		String line = br.readLine();
-		for (int i = 0; line != null; i++) {
+		int i = 0;
+		while (line != null) {
 			StringTokenizer st = new StringTokenizer(line, " ");
-			A[i][0] = Integer.parseInt(st.nextToken());
-			A[i][1] = Integer.parseInt(st.nextToken());
+			initA[i][0] = Integer.parseInt(st.nextToken()); // x 좌표 저장
+			initA[i++][1] = Integer.parseInt(st.nextToken()); // y 좌표 저장
 			line = br.readLine();
 		}
+		int[][] A = new int[i][2];
+		int[][] sortA = new int[i][2];
+		System.arraycopy(initA, 0, A, 0, i);
 
+		mergeSort(A, sortA, 0, i - 1);
 		System.out.println("찾고자 하는 수 x는 표준입력을 사용하여 직접 입력");
 		int find = Scanner.nextInt();
 
+	}
+
+	public static void mergeSort(int[][] a, int[][] sortA, int left, int right) {
+		int middle;
+		if (left < right) {
+			middle = (left + right) / 2;
+			mergeSort(a, sortA, left, middle);
+			mergeSort(a, sortA, middle + 1, right);
+			merge(a, sortA, left, middle, right);
+		}
+	}
+
+	public static void merge(int[][] a, int[][] sortA, int left, int middle, int right) {
+		int i = left;
+		int j = middle + 1;
+		int k = left;
+		int t;
+
+		while (i <= middle && j <= right) {
+			if (a[i][0] <= a[j][0]) {
+				sortA[k][0] = a[i][0];
+				sortA[k][1] = a[i++][1];
+			} else {
+				sortA[k][0] = a[j][0];
+				sortA[k][1] = a[j++][1];
+			}
+			k++;
+		}
+		if (i > middle) {
+			for (t = j; t <= right; t++, k++) {
+				sortA[k][0] = a[t][0];
+				sortA[k][1] = a[t][1];
+			}
+		} else {
+			for (t = i; t <= middle; t++, k++) {
+				sortA[k][0] = a[t][0];
+				sortA[k][1] = a[t][1];
+			}
+		}
+		for (t = left; t <= right; t++) {
+			a[t][0] = sortA[t][0];
+			a[t][1] = sortA[t][1];
+		}
 	}
 
 }
