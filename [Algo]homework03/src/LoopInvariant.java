@@ -13,29 +13,29 @@ public class LoopInvariant {
 		// 종료 조건 (Termination)
 		LoopInvariant li = new LoopInvariant();
 		int[][] initA = new int[10000][2];
-		Scanner Scanner = new Scanner(System.in);
 
 		String fp = "closest+data\\closest_data.txt";
 		FileInputStream fis = new FileInputStream(fp);
 		InputStreamReader isr = new InputStreamReader(fis, "euc-kr");
 		BufferedReader br = new BufferedReader(isr);
 		String line = br.readLine();
-		int i = 0;
+		int size = 0;
 		while (line != null) {
 			StringTokenizer st = new StringTokenizer(line, " ");
-			initA[i][0] = Integer.parseInt(st.nextToken()); // x 좌표 저장
-			initA[i++][1] = Integer.parseInt(st.nextToken()); // y 좌표 저장
+			initA[size][0] = Integer.parseInt(st.nextToken()); // x 좌표 저장
+			initA[size++][1] = Integer.parseInt(st.nextToken()); // y 좌표 저장
 			line = br.readLine();
 		}
-		int[][] A = new int[i][2];
-		int[][] sortA = new int[i][2];
-		System.arraycopy(initA, 0, A, 0, i);
+		int[][] A = new int[size][2];
+		System.arraycopy(initA, 0, A, 0, size); // 사용할 배열의 크기만큼 생성
 
-		li.mergeSort(A, sortA, 0, i - 1);
+		int[][] sortA = new int[size][2]; // merge소트를 하기위한 정렬된 배열
+		li.mergeSort(A, sortA, 0, size - 1);
 		// System.out.println("찾고자 하는 수 x는 표준입력을 사용하여 직접 입력");
 		// int find = Scanner.nextInt();
 
-		double leftmin = li.leftDistance(A, 0, 1, Math.sqrt(Math.pow((A[1][0] - A[0][0]), 2) + Math.pow((A[1][1] - A[0][1]), 2)));
+		double leftmin = li.leftDistance(A, 0, 1,
+				Math.sqrt(Math.pow((A[1][0] - A[0][0]), 2) + Math.pow((A[1][1] - A[0][1]), 2)));
 		double rightmin = li.rightDistance(A, A.length / 2, (A.length / 2) + 1,
 				Math.sqrt(Math.pow((A[A.length - 1][0] - A[A.length - 2][0]), 2)
 						+ Math.pow((A[A.length - 1][1] - A[A.length - 2][1]), 2)));
