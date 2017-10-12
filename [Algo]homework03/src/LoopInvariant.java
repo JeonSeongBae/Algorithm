@@ -40,13 +40,12 @@ public class LoopInvariant {
 		li.Search(A, A.length, x);
 	}
 
-	int Search(int A[], int length, int x) {
-
+	public int Search(int A[], int length, int x) {
 		// 초기조건 (Initialization)
 		// 유지 조건 (Maintenance)
 		// 종료 조건 (Termination)
 		int left = 0, right = length - 1, middle;
-
+		
 		while (left < right) {
 			middle = (left + right) / 2;
 			if (A[middle] < x)
@@ -56,10 +55,11 @@ public class LoopInvariant {
 			else
 				return middle;
 		}
+		// 해당 값을 찾지 못했을 경우 -1 return
 		return -1;
 	}
 
-	public static void mergeSort(int[] A, int[] sortedA, int left, int right) {
+	public void mergeSort(int[] A, int[] sortedA, int left, int right) {
 		int middle;
 		if (left < right) {
 			middle = (left + right) / 2;
