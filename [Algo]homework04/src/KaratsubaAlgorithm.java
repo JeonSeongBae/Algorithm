@@ -8,10 +8,10 @@ import java.util.StringTokenizer;
 
 import javax.crypto.SealedObject;
 
-public class LoopInvariant {
+public class KaratsubaAlgorithm {
 
 	public static void main(String[] args) throws IOException {
-		LoopInvariant li = new LoopInvariant();
+		KaratsubaAlgorithm li = new KaratsubaAlgorithm();
 		Scanner scanner = new Scanner(System.in);
 		String fp = "invariant_data.txt";
 		FileInputStream fis = new FileInputStream(fp);
