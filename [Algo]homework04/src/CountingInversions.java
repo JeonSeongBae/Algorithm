@@ -8,24 +8,25 @@ public class CountingInversions {
 
 	public static void main(String[] args) throws IOException {
 		CountingInversions self = new CountingInversions();
+		for (int i = 1; i < 5; i++) {
+			String fp = "data/data05_inversion_0" + i + ".txt";
+			int count = self.arrayCounting(fp);
+			int[] A = new int[count];
+			FileInputStream fis = new FileInputStream(fp);
+			InputStreamReader isr = new InputStreamReader(fis, "euc-kr");
+			BufferedReader br = new BufferedReader(isr);
 
-		String fp = "data/data05_inversion_01.txt";
-		int count = self.arrayCounting(fp);
-		int[] A = new int[count];
-		FileInputStream fis = new FileInputStream(fp);
-		InputStreamReader isr = new InputStreamReader(fis, "euc-kr");
-		BufferedReader br = new BufferedReader(isr);
-
-		String line = br.readLine();
-		StringTokenizer st = new StringTokenizer(line, " ");
-		while (line != null) {
-			st = new StringTokenizer(line, " ");
-			for (int i = 0; st.hasMoreTokens(); i++) {
-				A[i] = Integer.parseInt(st.nextToken()); // x 좌표 저장
+			String line = br.readLine();
+			StringTokenizer st = new StringTokenizer(line, " ");
+			while (line != null) {
+				st = new StringTokenizer(line, " ");
+				for (int j = 0; st.hasMoreTokens(); j++) {
+					A[j] = Integer.parseInt(st.nextToken()); // x 좌표 저장
+				}
+				line = br.readLine();
 			}
-			line = br.readLine();
+			System.out.println(self.SORT_AND_COUNT(A));
 		}
-		System.out.println(self.SORT_AND_COUNT(A));
 	}
 
 	private int arrayCounting(String fp) throws IOException {
@@ -53,7 +54,7 @@ public class CountingInversions {
 		int[] left = new int[L.length / 2];
 		System.arraycopy(L, 0, left, 0, L.length / 2);
 		int middle = L.length / 2;
-		if (L.length % 2 != 0) 
+		if (L.length % 2 != 0)
 			middle++;
 		int[] right = new int[middle];
 		System.arraycopy(L, L.length / 2, right, 0, middle);
