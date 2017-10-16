@@ -1,9 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.StringTokenizer;
 
 public class CountingInversions {
@@ -55,9 +53,8 @@ public class CountingInversions {
 		int[] left = new int[L.length / 2];
 		System.arraycopy(L, 0, left, 0, L.length / 2);
 		int middle = L.length / 2;
-		if (L.length % 2 != 0) {
+		if (L.length % 2 != 0) 
 			middle++;
-		}
 		int[] right = new int[middle];
 		System.arraycopy(L, L.length / 2, right, 0, middle);
 		int ra = SORT_AND_COUNT(left);
@@ -79,12 +76,12 @@ public class CountingInversions {
 				L[indexL++] = left[indexA++];
 			}
 		}
-		if (indexA<=left.length-1) {
-			System.arraycopy(left, indexA, L, indexL, L.length-indexL-1);
-		}else {
-			System.arraycopy(right, indexB, L, indexL, L.length-indexL-1);
+		if (indexA <= left.length - 1) {
+			System.arraycopy(left, indexA, L, indexL, L.length - indexL - 1);
+		} else {
+			System.arraycopy(right, indexB, L, indexL, L.length - indexL - 1);
 		}
-		
+
 		return inverstion_count;
 	}
 
