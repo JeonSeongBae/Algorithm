@@ -30,7 +30,7 @@ public class KaratsubaAlgorithm {
 	private BigInteger KARATSUBA(BigInteger A, BigInteger B) {
 		int length = Math.max(A.toString().length(), B.toString().length());
 
-		if (length <= 2)
+		if (length <= 1)
 			return A.multiply(B);
 
 		int M = length / 2;
@@ -45,10 +45,6 @@ public class KaratsubaAlgorithm {
 		BigInteger z0 = KARATSUBA(X1, Y1);
 		BigInteger z1 = KARATSUBA((X2.add(X1)), (Y2.add(Y1))).subtract(z2).subtract(z0);
 
-		z1 = z1.multiply(mask);
-		mask = mask.multiply(mask);
-		z2 = z2.multiply(mask);
-
-		return z2.add(z1).add(z0);
+		return z2.multiply(mask.multiply(mask)).add(z1.multiply(mask)).add(z0);
 	}
 }

@@ -57,15 +57,12 @@ public class CountingInversions {
 		if (L.length == 1) {
 			return 0;
 		}
-		int[] left = new int[L.length / 2];
-		System.arraycopy(L, 0, left, 0, L.length / 2);
 		int middle = L.length / 2;
-		
-		if (L.length % 2 != 0)
-			middle++;
-		
-		int[] right = new int[middle];
-		System.arraycopy(L, L.length / 2, right, 0, middle);
+		int[] left = new int[middle];
+		System.arraycopy(L, 0, left, 0, middle);
+
+		int[] right = new int[L.length - middle];
+		System.arraycopy(L, middle, right, 0, L.length - middle);
 		int ra = SORT_AND_COUNT(left);
 		int rb = SORT_AND_COUNT(right);
 		int r = MERGE_AND_COUNT(L, left, right);
@@ -78,21 +75,24 @@ public class CountingInversions {
 		int indexA = 0;
 		int indexB = 0;
 		int indexL = 0;
+		int Acount = left.length;
+		int Bcount = right.length;
 		while (indexA <= left.length - 1 && indexB <= right.length - 1) {
-			if (left[indexA] > right[indexB]) {
-				inverstion_count += indexA + 1;
+			if (left[indexA] >= right[indexB]) {
+				inverstion_count += Acount;
 				L[indexL++] = right[indexB++];
+				Bcount--;
 			} else {
 				L[indexL++] = left[indexA++];
+				Acount--;
 			}
 		}
 		// save remaining elements to list
 		if (indexA <= left.length - 1) {
-			System.arraycopy(left, indexA, L, indexL, L.length - indexL - 1);
+			System.arraycopy(left, indexA, L, indexL, Acount);
 		} else {
-			System.arraycopy(right, indexB, L, indexL, L.length - indexL - 1);
+			System.arraycopy(right, indexB, L, indexL, Bcount);
 		}
-		// return inverstion count
 		return inverstion_count;
 	}
 
