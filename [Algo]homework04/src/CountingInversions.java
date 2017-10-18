@@ -60,8 +60,10 @@ public class CountingInversions {
 		int[] left = new int[L.length / 2];
 		System.arraycopy(L, 0, left, 0, L.length / 2);
 		int middle = L.length / 2;
+		
 		if (L.length % 2 != 0)
 			middle++;
+		
 		int[] right = new int[middle];
 		System.arraycopy(L, L.length / 2, right, 0, middle);
 		int ra = SORT_AND_COUNT(left);
