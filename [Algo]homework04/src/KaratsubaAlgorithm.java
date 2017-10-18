@@ -28,29 +28,23 @@ public class KaratsubaAlgorithm {
 	}
 
 	private BigInteger KARATSUBA(BigInteger A, BigInteger B) {
-		int lengthA = String.valueOf(A.longValue()).length();
-		int lengthB = String.valueOf(B.longValue()).length();
-		if (lengthA <= 2 || lengthB <= 2) {
+		int length = Math.max(A.toString().length(), B.toString().length());
+
+		if (length <= 1)
 			return A.multiply(B);
-		}
-		// Divide A and store data in X2 and X0
-		BigInteger X2 = new BigInteger(String.valueOf(A.intValue()).substring(0, lengthA / 2));
-		BigInteger X1 = new BigInteger(String.valueOf(A.intValue()).substring(lengthA / 2));
 
-		// Divide B and store data in Y2 and Y0
-		BigInteger Y2 = new BigInteger(String.valueOf(B.intValue()).substring(0, lengthB / 2));
-		BigInteger Y1 = new BigInteger(String.valueOf(B.intValue()).substring(lengthB / 2));
+		int M = length / 2;
+		BigInteger mask = new BigInteger(String.valueOf((int) Math.pow(10, M)));
 
-		BigInteger z0 = KARATSUBA(X2, Y2);
-		BigInteger z2 = KARATSUBA(X1, Y1);
-		BigInteger z1 = KARATSUBA((X2.add(X1)), (Y2.add(Y1)));
-		z1 = z1.subtract(z2).subtract(z0);
+		BigInteger X2 = A.divide(mask);
+		BigInteger Y2 = B.divide(mask);
+		BigInteger X1 = A.remainder(mask);
+		BigInteger Y1 = B.remainder(mask);
 
-		BigInteger temp = new BigInteger(String.valueOf((int)Math.pow(10, lengthA / 2 * 2)));
-		z0 = z0.multiply(temp);
-		temp = new BigInteger(String.valueOf((int)Math.pow(10, lengthA / 2)));
-		z1 = z1.multiply(temp);
+		BigInteger z2 = KARATSUBA(X2, Y2);
+		BigInteger z0 = KARATSUBA(X1, Y1);
+		BigInteger z1 = KARATSUBA((X2.add(X1)), (Y2.add(Y1))).subtract(z2).subtract(z0);
 
-		return z0.add(z1).add(z2);
+		return z2.multiply(mask.multiply(mask)).add(z1.multiply(mask)).add(z0);
 	}
 }
