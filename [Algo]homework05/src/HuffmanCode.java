@@ -5,10 +5,10 @@ import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.util.StringTokenizer;
 
-public class KaratsubaAlgorithm {
+public class HuffmanCode {
 
 	public static void main(String[] args) throws IOException {
-		KaratsubaAlgorithm self = new KaratsubaAlgorithm();
+		HuffmanCode self = new HuffmanCode();
 		String fp = "data/data05_karatsuba.txt";
 
 		// Count the number of tokens to determine the size of the array
