@@ -9,7 +9,6 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class HuffmanCode {
-	String baseHuffman = "";
 
 	public class Node {
 		private String alpha; /* 알파벳 */
@@ -40,26 +39,29 @@ public class HuffmanCode {
 
 		String fp = "data06_huffman.txt";
 		ArrayList<Node> c = self.fileRead(fp);
+		ArrayList<Node> c1 = (ArrayList<Node>) c.clone();
 		Node min = self.huffman(c);
 		System.out.println(min.frequency);
-		printHuffman(min);
+		for (int i = 0; i < c1.size(); i++) {
+			String findAlpha = c1.get(i).alpha;
+			printHuffman(min, c1.get(i).alpha);
+		}
 	}
 
-	private static void printHuffman(Node min) {
+	private static void printHuffman(Node min, String findAlpha) {
 		if (min.left != null) {// 좌측 가지는 0
-			printHuffman(min.left);
+			printHuffman(min.left, findAlpha);
 		}
 		if (min.right != null) { // 우측 가지는 1
-			printHuffman(min.right);
+			printHuffman(min.right, findAlpha);
 		}
-		if (!min.alpha.equals("")) {
-			System.out.println(min.alpha + min.huffman);
+		if (min.alpha.equals(findAlpha)) {
+			System.out.println(min.alpha + "," + min.huffman);
 		}
 	}
 
 	private ArrayList<Node> fileRead(String fp) throws IOException {
 		// fileReader
-		Scanner scanner = new Scanner(System.in);
 		FileInputStream fis = new FileInputStream(fp);
 		InputStreamReader isr = new InputStreamReader(fis, "euc-kr");
 		BufferedReader br = new BufferedReader(isr);
@@ -94,7 +96,7 @@ public class HuffmanCode {
 	private Node huffman(ArrayList<Node> c) {
 		int n = c.size();
 
-		c.add(0, new Node(""));
+		c.add(0, new Node());
 		buildminheap(c);
 		Node left;
 		Node right;
@@ -106,7 +108,7 @@ public class HuffmanCode {
 			insert(c, z);
 		}
 		Node min = extract_min(c);
-		huffmancode(min);
+		huffmancode(min, "");
 		return min;
 	}
 
@@ -124,20 +126,20 @@ public class HuffmanCode {
 	private void minheapify(ArrayList<Node> c, int i) {
 		int l = leftchild(i);
 		int r = rightchild(i);
-		int largest;
+		int smallest;
 		if (l <= c.size() - 1 && c.get(l).frequency <= c.get(i).frequency) {
-			largest = l;
+			smallest = l;
 		} else {
-			largest = i;
+			smallest = i;
 		}
-		if (r <= c.size() - 1 && c.get(r).frequency <= c.get(largest).frequency) {
-			largest = r;
+		if (r <= c.size() - 1 && c.get(r).frequency <= c.get(smallest).frequency) {
+			smallest = r;
 		}
-		if (largest != i) {
+		if (smallest != i) {
 			Node temp = c.get(i);
-			c.set(i, c.get(largest));
-			c.set(largest, temp);
-			minheapify(c, largest);
+			c.set(i, c.get(smallest));
+			c.set(smallest, temp);
+			minheapify(c, smallest);
 		}
 	}
 
@@ -160,7 +162,7 @@ public class HuffmanCode {
 	}
 
 	/* 허프만 코드를 구성하여 저장하는 메소드 */
-	private void huffmancode(Node c) {
+	private String huffmancode(Node c, String baseHuffman) {
 		/*
 		 * 각각의 문자에 대한 코드는 그 문자에 대한 루트-리프 경로에 의해 결정되는데, 왼쪽 가지는 “0”으로 표시되고, 오른쪽 가지는 “1”로
 		 * 표시됨
@@ -168,14 +170,15 @@ public class HuffmanCode {
 		c.huffman = baseHuffman;// 허프만 코드를 각 노드에 저장
 		if (c.left != null) {// 좌측 가지는 0
 			baseHuffman += "0";
-			huffmancode(c.left);
+			baseHuffman = huffmancode(c.left, baseHuffman);
 		}
 		if (c.right != null) { // 우측 가지는 1
 			baseHuffman += "1";
-			huffmancode(c.right);
+			baseHuffman = huffmancode(c.right, baseHuffman);
 		}
-		if (baseHuffman.length() != 0) // 마지막 String을 제거
+		if (baseHuffman.length() != 0) { // 마지막 String을 제거
 			baseHuffman = baseHuffman.substring(0, baseHuffman.length() - 1);
-
+		}
+		return baseHuffman;
 	}
 }
