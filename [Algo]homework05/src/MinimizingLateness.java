@@ -7,12 +7,16 @@ import java.util.StringTokenizer;
 
 public class MinimizingLateness {
 	public class schedule implements Comparable<schedule> {
-		public int t;
-		public int d;
+		private int t;
+		private int d;
+		private int s;
+		private int f;
 
-		public schedule(int t, int d) {
+		private schedule(int t, int d) {
 			this.t = t;
 			this.d = d;
+			this.s = 0;
+			this.f = 0;
 		}
 
 		@Override
@@ -25,13 +29,12 @@ public class MinimizingLateness {
 				return 1;
 			}
 		}
-
 	}
 
 	public static void main(String[] args) throws IOException {
 		MinimizingLateness self = new MinimizingLateness();
+		// 파일이 저장되어 있는 곳
 		String fp = "data06_lateness.txt";
-		// make an array of the number of tokens
 
 		// ArrayList를 생성
 		schedule[] scheldule = self.fileRead(fp);
@@ -65,15 +68,15 @@ public class MinimizingLateness {
 		return schedule;
 	}
 
-	private int minimizing(schedule[] A) {
-		int MAXLateness = 0;
-		int time = 0;
-		for (int i = 0; i < A.length; i++) {
-			schedule s = (schedule) A[i];
-			time += s.t;// 소요되는 시간을 저장
-			MAXLateness += Math.max(0, time - s.d); // 0보다 클 경우 MAXLateness에 값을 저장
+	private int minimizing(schedule[] schedule) {
+		int Lateness = 0;
+		for (int i = 0; i < schedule.length; i++) {
+			if (i >= 1)
+				schedule[i].s = schedule[i - 1].f;
+			schedule[i].f = schedule[i].s + schedule[i].t;// 소요되는 시간을 저장
+			Lateness += Math.max(0, schedule[i].f - schedule[i].d); // 0보다 클 경우 MAXLateness에 값을 저장
 		}
-		return MAXLateness;
+		return Lateness;
 	}
 
 }
