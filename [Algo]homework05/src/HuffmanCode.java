@@ -25,7 +25,7 @@ public class HuffmanCode {
 			this.huffman = "";// 허프만 코드
 		}
 
-		public Node() {
+		public Node() { // 빈 노드
 			this.alpha = ""; /* 알파벳 */
 			this.frequency = 0; /* 빈도수 */
 			this.left = null; // 왼쪽 가지
@@ -39,12 +39,15 @@ public class HuffmanCode {
 
 		String fp = "data06_huffman.txt";
 		ArrayList<Node> c = self.fileRead(fp);
-		ArrayList<Node> c1 = (ArrayList<Node>) c.clone();
+
+		// Huffman Q생성
 		Node min = self.huffman(c);
-		System.out.println(min.frequency);
-		for (int i = 0; i < c1.size(); i++) {
-			String findAlpha = c1.get(i).alpha;
-			printHuffman(min, c1.get(i).alpha);
+
+		// HuffmanCode생성
+		self.huffmancode(min, "");
+
+		for (int i = 0; i < c.size(); i++) {
+			printHuffman(min, c.get(i).alpha);
 		}
 	}
 
@@ -67,15 +70,15 @@ public class HuffmanCode {
 		BufferedReader br = new BufferedReader(isr);
 		StringTokenizer st;
 		String line = br.readLine();
-		ArrayList<Node> A = new ArrayList<Node>(); // 알파벳과 빈도수가 저장될 ArrayList
-		ArrayList<String> B = new ArrayList<String>(); // 사용되는 문자열을 저장하여 포함되어있는지 확인
-		while (line != null) {
-			for (int i = 0; i < line.length(); i++) {
+		ArrayList<Node> frequencyList = new ArrayList<Node>(); // 알파벳과 빈도수가 저장될 ArrayList
+		ArrayList<String> alphaList = new ArrayList<String>(); // 사용되는 문자열을 저장하여 포함되어있는지 확인
+		while (line != null) {// 다음줄에도 코드가 있는지 확인
+			for (int i = 0; i < line.length(); i++) {// line의 길이만큼 비교
 				String s = line.substring(i, i + 1);
-				if (B.contains(s)) {
+				if (alphaList.contains(s)) {
 					// 포함되어 있음
-					for (int j = 0; j < A.size(); j++) {
-						Node tempCompare = A.get(j);
+					for (int j = 0; j < frequencyList.size(); j++) {
+						Node tempCompare = frequencyList.get(j);
 						if (tempCompare.alpha.equals(s)) {
 							tempCompare.frequency++;
 							break;
@@ -84,37 +87,33 @@ public class HuffmanCode {
 				} else {
 					// 포함되어있지 않음
 					Node tempAdd = new Node(s);
-					A.add(tempAdd); // Node리스트에 추가
-					B.add(s); // 포함되어있는 리스트에 추가
+					frequencyList.add(tempAdd); // Node리스트에 추가
+					alphaList.add(s); // 포함되어있는 리스트에 추가
 				}
 			}
-			line = br.readLine();
+			line = br.readLine();// 다음줄로 넘어감
 		}
-		return A;
+		return frequencyList;
 	}
 
 	private Node huffman(ArrayList<Node> c) {
 		int n = c.size();
+		ArrayList<Node> q = (ArrayList<Node>) c.clone();
 
-		c.add(0, new Node());
-		buildminheap(c);
+		q.add(0, new Node());
+		buildminheap(q);
+
 		Node left;
 		Node right;
 		for (int i = 1; i <= n - 1; i++) {
 			Node z = new Node();
-			z.left = left = extract_min(c);
-			z.right = right = extract_min(c);
+			z.left = left = extract_min(q);
+			z.right = right = extract_min(q);
 			z.frequency = left.frequency + right.frequency;
-			insert(c, z);
+			insert(q, z);
 		}
-		Node min = extract_min(c);
-		huffmancode(min, "");
+		Node min = extract_min(q);
 		return min;
-	}
-
-	private void insert(ArrayList<Node> c, Node z) {
-		c.add(1, z);
-		buildminheap(c);
 	}
 
 	private void buildminheap(ArrayList<Node> c) {
@@ -147,6 +146,11 @@ public class HuffmanCode {
 		Node min = c.remove(1); // 1을 추출
 		buildminheap(c);// minheap으로 다시 만들어줌
 		return min;
+	}
+
+	private void insert(ArrayList<Node> c, Node z) {
+		c.add(1, z);
+		buildminheap(c);
 	}
 
 	public static int parent(int i) {
