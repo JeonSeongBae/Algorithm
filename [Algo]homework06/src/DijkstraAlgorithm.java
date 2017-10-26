@@ -1,25 +1,64 @@
 
 public class DijkstraAlgorithm {
+	// 무한대를 표현
+	final static double infinity = Double.POSITIVE_INFINITY;
+	// class Object {
+	// String start;
+	// String end;
+	// int cost;
+	//
+	// Object(String start, String end, int cost) {
+	// this.start = start;
+	// this.end = end;
+	// this.cost = cost;
+	// }
+	// }
 
 	public static void main(String[] args) {
-
-		MST m = new MST(new String[] { "A", "B", "C", "D", "E", "F", "G" });
-
-		m.add("A", "B", 4);
-		m.add("A", "G", 2);
-		m.add("A", "F", 1);
-		m.add("B", "C", 2);
-		m.add("B", "G", 5);
-
-		m.add("C", "D", 4);
-		m.add("C", "G", 1);
-		m.add("D", "E", 1);
-		m.add("D", "G", 2);
-		m.add("E", "F", 3);
-		m.add("E", "G", 4);
-
-		m.add("F", "G", 3);
-		m.prim("B");
-		m.print();
+		Object[][] path = new Object[5][5];
+		// A = 0 / B = 1 / C = 2 / D = 3 / E = 4
+		path[0][1] = 10;
+		path[0][1] = 10;
+		path[0][1] = 10;
+		path[0][1] = 10;
+		path[0][1] = 10;
+		path[0][1] = 10;
+		path[0][1] = 10;
+		path[0][1] = 10;
 	}
+
+	private static int vertex(int index) {
+		switch (index) {
+		case 0:
+			return 0;
+		case 1:
+			return 1;
+		case 2:
+			return 2;
+		case 3:
+			return 3;
+		case 4:
+			return 4;
+		default:
+			return 5;
+		}
+	}
+
+	private static int index(String vertex) {
+		switch (vertex) {
+		case "A":
+			return 0;
+		case "B":
+			return 1;
+		case "C":
+			return 2;
+		case "D":
+			return 3;
+		case "E":
+			return 4;
+		default:
+			return 5;
+		}
+	}
+
 }
