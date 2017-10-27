@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class DijkstraAlgorithm {
 	int queue_size = 0;
 	// 무한대를 표현
-	// final static double infinity = Double.POSITIVE_INFINITY;
-	final static double infinity = 500;
+	final static double infinity = Double.POSITIVE_INFINITY - 1;
+	// final static int infinity = Integer.MAX_VALUE;
 
 	public static class V {
 		String vertex;
@@ -34,7 +34,7 @@ public class DijkstraAlgorithm {
 		w[index("B")][index("D")] = 2;
 		w[index("C")][index("B")] = 4;
 		w[index("C")][index("D")] = 8;
-		w[index("C")][index("E")] = 8;
+		w[index("C")][index("E")] = 2;
 		w[index("D")][index("E")] = 7;
 		w[index("E")][index("D")] = 9;
 		// path가 없는 곳엔 무한대 값을 저장
@@ -73,21 +73,31 @@ public class DijkstraAlgorithm {
 			// for each v ∈ Adj[u]
 			for (int i = 1; i < Q.size(); i++) {
 				// do if d[v] > d[u] + w(w,v)
-				System.out.print(d.get(index(Q.get(i).vertex)) + ">");
-				System.out.print(d.get(index(u.vertex)) + "+");
-				System.out.println(w[index(u.vertex)][index(Q.get(i).vertex)]);
-				System.out.println(u.vertex + Q.get(i).vertex);
-				if (d.get(index(Q.get(i).vertex)) > d.get(index(u.vertex))
-						+ w[index(u.vertex)][index(Q.get(i).vertex)]) {
+				// System.out.print(d.get(index(Q.get(i).vertex)) + ">");
+				// System.out.print(d.get(index(u.vertex)) + "+");
+				// System.out.println(w[index(u.vertex)][index(Q.get(i).vertex)]);
+				// System.out.println(u.vertex + Q.get(i).vertex);
+				if (w[index(u.vertex)][index(Q.get(i).vertex)] != (int) infinity
+						&& d.get(index(Q.get(i).vertex)) > d.get(index(u.vertex))
+								+ w[index(u.vertex)][index(Q.get(i).vertex)]) {
 					// then d[v] <- d[u] + w(w,v)
 					d.set(index(Q.get(i).vertex), d.get(index(u.vertex)) + w[index(u.vertex)][index(Q.get(i).vertex)]);
-					System.out.println(Q.get(i).vertex);
-					Q.set(index(Q.get(i).vertex), new V(Q.get(i).vertex,
-							d.get(index(u.vertex)) + w[index(u.vertex)][index(Q.get(i).vertex)]));
+					System.out.print("Q[" + i + "] : d[" + Q.get(i).vertex + "] = " + Q.get(i).cost);
+					for (int j = 1; j < Q.size(); j++) {
+						if (Q.get(j).vertex.equals(Q.get(i).vertex)) {
+							 System.out.print(" -> ");
+							Q.set(j, new V(Q.get(i).vertex,
+									d.get(index(u.vertex)) + w[index(u.vertex)][index(Q.get(i).vertex)]));
+							System.out.println("Q[" + i + "] : d[" + Q.get(j).vertex + "] = " + Q.get(j).cost);
+							break;
+						}
+					}
+
 				}
 			}
+			System.out.println();
 			self.buildminheap(Q);
-			self.printQ(Q);
+			// self.printQ(Q);
 		}
 	}
 
