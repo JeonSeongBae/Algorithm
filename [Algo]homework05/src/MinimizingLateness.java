@@ -74,7 +74,7 @@ public class MinimizingLateness {
 			if (i >= 1)
 				schedule[i].s = schedule[i - 1].f;
 			schedule[i].f = schedule[i].s + schedule[i].t;// 소요되는 시간을 저장
-			Lateness += Math.max(0, schedule[i].f - schedule[i].d); // 0보다 클 경우 MAXLateness에 값을 저장
+			Lateness = Math.max(Lateness, schedule[i].f - schedule[i].d); // 0보다 클 경우 MAXLateness에 값을 저장
 		}
 		return Lateness;
 	}
