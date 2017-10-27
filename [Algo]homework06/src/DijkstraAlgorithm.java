@@ -18,6 +18,7 @@ public class DijkstraAlgorithm {
 
 	public static void main(String[] args) {
 		System.out.println("dijkatra's algorithm.");
+		System.out.println();
 		DijkstraAlgorithm self = new DijkstraAlgorithm();
 		// d[v] 값의 계산이 완료된 점들의 집합
 		int[][] w = new int[5][5];
@@ -65,35 +66,33 @@ public class DijkstraAlgorithm {
 		int S_index = 0;
 		// while Q != ∅
 		while (Q.size() != 1) {
+			System.out.println("===============================================");
 			// do u <- EXTRACT-MIN(Q)
 			V u = self.extract_min(Q);
 			// S <- S U {u}
 			System.out.println("S[" + S_index + "] : d[" + u.vertex + "] = " + d.get(index(u.vertex)));
+			System.out.println("-----------------------------------------------");
 			S[S_index++] = u.vertex;
 			// for each v ∈ Adj[u]
 			for (int i = 1; i < Q.size(); i++) {
 				// do if d[v] > d[u] + w(w,v)
-				// System.out.print(d.get(index(Q.get(i).vertex)) + ">");
-				// System.out.print(d.get(index(u.vertex)) + "+");
-				// System.out.println(w[index(u.vertex)][index(Q.get(i).vertex)]);
-				// System.out.println(u.vertex + Q.get(i).vertex);
+				System.out.print("Q[" + i + "] : d[" + Q.get(i).vertex + "] = " + Q.get(i).cost);
 				if (w[index(u.vertex)][index(Q.get(i).vertex)] != (int) infinity
 						&& d.get(index(Q.get(i).vertex)) > d.get(index(u.vertex))
 								+ w[index(u.vertex)][index(Q.get(i).vertex)]) {
 					// then d[v] <- d[u] + w(w,v)
 					d.set(index(Q.get(i).vertex), d.get(index(u.vertex)) + w[index(u.vertex)][index(Q.get(i).vertex)]);
-					System.out.print("Q[" + i + "] : d[" + Q.get(i).vertex + "] = " + Q.get(i).cost);
 					for (int j = 1; j < Q.size(); j++) {
 						if (Q.get(j).vertex.equals(Q.get(i).vertex)) {
 							 System.out.print(" -> ");
 							Q.set(j, new V(Q.get(i).vertex,
 									d.get(index(u.vertex)) + w[index(u.vertex)][index(Q.get(i).vertex)]));
-							System.out.println("Q[" + i + "] : d[" + Q.get(j).vertex + "] = " + Q.get(j).cost);
+							System.out.println("d[" + Q.get(j).vertex + "] = " + Q.get(j).cost);
 							break;
 						}
 					}
 
-				}
+				}else {System.out.println();}
 			}
 			System.out.println();
 			self.buildminheap(Q);
