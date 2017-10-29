@@ -82,9 +82,10 @@ public class DijkstraAlgorithm {
 								+ w[index(u.vertex)][index(Q.get(i).vertex)]) {
 					// then d[v] <- d[u] + w(w,v)
 					d.set(index(Q.get(i).vertex), d.get(index(u.vertex)) + w[index(u.vertex)][index(Q.get(i).vertex)]);
+					// Queue를 임의로 변경
 					for (int j = 1; j < Q.size(); j++) {
 						if (Q.get(j).vertex.equals(Q.get(i).vertex)) {
-							 System.out.print(" -> ");
+							System.out.print(" -> ");
 							Q.set(j, new V(Q.get(i).vertex,
 									d.get(index(u.vertex)) + w[index(u.vertex)][index(Q.get(i).vertex)]));
 							System.out.println("d[" + Q.get(j).vertex + "] = " + Q.get(j).cost);
@@ -92,20 +93,14 @@ public class DijkstraAlgorithm {
 						}
 					}
 
-				}else {System.out.println();}
+				} else {
+					System.out.println();
+				}
 			}
 			System.out.println();
 			self.buildminheap(Q);
 			// self.printQ(Q);
 		}
-	}
-
-	private void printQ(ArrayList<V> q) {
-		for (int i = 1; i < q.size(); i++) {
-			System.out.print("Q[" + i + "] : d[" + q.get(i).vertex + "] = " + q.get(i).cost);
-			System.out.println();
-		}
-		System.out.println();
 	}
 
 	private static String vertex(int index) {
