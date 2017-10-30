@@ -1,7 +1,10 @@
+import java.util.ArrayList;
+
 public class DijkstraAlgorithm {
 	int queue_size = 0;
 	// 무한대를 표현
-	final static double infinity = Double.POSITIVE_INFINITY;
+	final static double infinity = Double.POSITIVE_INFINITY - 1;
+	// final static int infinity = Integer.MAX_VALUE;
 
 	public static class V {
 		String vertex;
@@ -14,40 +17,89 @@ public class DijkstraAlgorithm {
 	}
 
 	public static void main(String[] args) {
+		System.out.println("dijkatra's algorithm.");
+		System.out.println();
 		DijkstraAlgorithm self = new DijkstraAlgorithm();
 		// d[v] 값의 계산이 완료된 점들의 집합
 		int[][] w = new int[5][5];
 		// A = 0 / B = 1 / C = 2 / D = 3 / E = 4
 		// 각각의 위치에 cost를 저장
+		for (int i = 0; i < w.length; i++) {
+			for (int j = 0; j < w.length; j++) {
+				w[i][j] = (int) infinity;
+			}
+		}
 		w[index("A")][index("B")] = 10;
 		w[index("A")][index("C")] = 3;
 		w[index("B")][index("C")] = 1;
 		w[index("B")][index("D")] = 2;
 		w[index("C")][index("B")] = 4;
 		w[index("C")][index("D")] = 8;
+		w[index("C")][index("E")] = 2;
 		w[index("D")][index("E")] = 7;
 		w[index("E")][index("D")] = 9;
-
 		// path가 없는 곳엔 무한대 값을 저장
-		int[] d = new int[5];
-		String[] S = new String[5];
-		V[] V = new V[5];
-		V[] Q = new V[V.length + 1];
+		ArrayList<V> V = new ArrayList<V>();
+		ArrayList<Integer> d = new ArrayList<Integer>();
+		ArrayList<V> Q = new ArrayList<V>();
 
 		// 시작 지점의 값은 0이다.
-		d[index("A")] = 0;
-		for (int i = 1; i < V.length; i++) {
-			V[i] = new V(vertex(i), (int) infinity);
+		V.add(index("A"), new V("A", 0));
+		for (int i = 1; i < 5; i++) {
+			V.add(i, new V(vertex(i), (int) infinity));
 		}
-		Q[0] = new V("", 0);
-		for (int i = 0; i < V.length; i++) {
-			self.insert(Q, V[i]);
+		// d[s] <- 0
+		d.add(index("A"), 0);
+		// for each v ∈ V-{s}
+		for (int i = 1; i < V.size(); i++) {
+			// do d[v] <- ∞
+			d.add(i, (int) infinity);
 		}
+		// S <- ∅
+		String[] S = new String[V.size()];
+		// Q <- V Q is a priority queue maintaining V - S
+		Q.add(0, new V("", 0));
+		for (int i = 0; i < V.size(); i++) {
+			self.insert(Q, V.get(i));
+		}
+
 		int S_index = 0;
-		while (Q[1] == null) {
+		// while Q != ∅
+		while (Q.size() != 1) {
+			System.out.println("===============================================");
+			// do u <- EXTRACT-MIN(Q)
 			V u = self.extract_min(Q);
+			// S <- S U {u}
+			System.out.println("S[" + S_index + "] : d[" + u.vertex + "] = " + d.get(index(u.vertex)));
+			System.out.println("-----------------------------------------------");
 			S[S_index++] = u.vertex;
-			
+			// for each v ∈ Adj[u]
+			for (int i = 1; i < Q.size(); i++) {
+				// do if d[v] > d[u] + w(w,v)
+				System.out.print("Q[" + i + "] : d[" + Q.get(i).vertex + "] = " + Q.get(i).cost);
+				if (w[index(u.vertex)][index(Q.get(i).vertex)] != (int) infinity
+						&& d.get(index(Q.get(i).vertex)) > d.get(index(u.vertex))
+								+ w[index(u.vertex)][index(Q.get(i).vertex)]) {
+					// then d[v] <- d[u] + w(w,v)
+					d.set(index(Q.get(i).vertex), d.get(index(u.vertex)) + w[index(u.vertex)][index(Q.get(i).vertex)]);
+					// Queue를 임의로 변경
+					for (int j = 1; j < Q.size(); j++) {
+						if (Q.get(j).vertex.equals(Q.get(i).vertex)) {
+							System.out.print(" -> ");
+							Q.set(j, new V(Q.get(i).vertex,
+									d.get(index(u.vertex)) + w[index(u.vertex)][index(Q.get(i).vertex)]));
+							System.out.println("d[" + Q.get(j).vertex + "] = " + Q.get(j).cost);
+							break;
+						}
+					}
+
+				} else {
+					System.out.println();
+				}
+			}
+			System.out.println();
+			self.buildminheap(Q);
+			// self.printQ(Q);
 		}
 	}
 
@@ -85,41 +137,40 @@ public class DijkstraAlgorithm {
 		}
 	}
 
-	private void buildminheap(V[] Q) {
-		for (int i = Q.length / 2; i >= 1; i--) {
-			minheapify(Q, i);
+	private void buildminheap(ArrayList<V> c) {
+		for (int i = c.size() / 2; i >= 1; i--) {
+			minheapify(c, i);
 		}
 	}
 
-	private void minheapify(V[] Q, int i) {
+	private void minheapify(ArrayList<V> c, int i) {
 		int l = 2 * i;
 		int r = 2 * i + 1;
 		int smallest;
-		if (l <= Q.length - 1 && Q[l].cost <= Q[i].cost) {
+		if (l <= c.size() - 1 && c.get(l).cost <= c.get(i).cost) {
 			smallest = l;
 		} else {
 			smallest = i;
 		}
-		if (r <= Q.length - 1 && Q[r].cost <= Q[smallest].cost) {
+		if (r <= c.size() - 1 && c.get(r).cost <= c.get(smallest).cost) {
 			smallest = r;
 		}
 		if (smallest != i) {
-			V temp = Q[i];
-			Q[i] = Q[smallest];
-			Q[smallest] = temp;
-			minheapify(Q, smallest);
+			V temp = (V) c.get(i);
+			c.set(i, c.get(smallest));
+			c.set(smallest, temp);
+			minheapify(c, smallest);
 		}
 	}
 
-	private V extract_min(V[] Q) {
-		V min = Q[1]; // 1을 추출
-		Q[1] = null;
-		buildminheap(Q);// minheap으로 다시 만들어줌
+	public V extract_min(ArrayList<V> c) {
+		V min = (V) c.remove(1); // 1을 추출
+		buildminheap(c);// minheap으로 다시 만들어줌
 		return min;
 	}
 
-	private void insert(V[] Q, V v) {
-		Q[++queue_size] = v;
-		buildminheap(Q);
+	private void insert(ArrayList<V> c, V object) {
+		c.add(object);
+		buildminheap(c);
 	}
 }
