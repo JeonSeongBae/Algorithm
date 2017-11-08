@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 public class PrimsAlgorithm {
 	final static int infinity = Integer.MAX_VALUE;
-	String[] v;
-	int[] key;
-	int[][] e;
-	ArrayList<String> q;
+	static String[] v;
+	static int[] key;
+	static int[][] e;
+	static ArrayList<String> q;
 
 	public PrimsAlgorithm(String[] vertexes) {
 		v = vertexes;
@@ -17,45 +17,50 @@ public class PrimsAlgorithm {
 	public static void main(String[] args) {
 		System.out.println("Prims algorithm.");
 		System.out.println();
-		PrimsAlgorithm self = new PrimsAlgorithm(new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "i" });
+		new PrimsAlgorithm(new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "i" });
 
-		self.add("a", "b", 4);
-		self.add("a", "h", 8);
+		add("a", "b", 4);
+		add("a", "h", 8);
 
-		self.add("b", "h", 11);
-		self.add("b", "c", 8);
+		add("b", "h", 11);
+		add("b", "c", 8);
 
-		self.add("c", "d", 7);
-		self.add("c", "f", 4);
-		self.add("c", "i", 2);
+		add("c", "d", 7);
+		add("c", "f", 4);
+		add("c", "i", 2);
 
-		self.add("d", "e", 9);
-		self.add("d", "f", 14);
+		add("d", "e", 9);
+		add("d", "f", 14);
 
-		self.add("e", "f", 10);
+		add("e", "f", 10);
 
-		self.add("f", "g", 2);
+		add("f", "g", 2);
 
-		self.add("g", "h", 1);
-		self.add("g", "i", 6);
+		add("g", "h", 1);
+		add("g", "i", 6);
 
-		self.add("h", "i", 7);
+		add("h", "i", 7);
 
-		for (int i = 0; i < self.v.length; i++) {
-			self.insert(self.q, self.v[i]);
+		for (int i = 0; i < v.length; i++) {
+			insert(q, v[i]);
 		}
-		for (int i = 0; i < self.key.length; i++) {
-			self.key[i] = infinity;
+		for (int i = 0; i < key.length; i++) {
+			key[i] = infinity;
 		}
-		self.key[index("a")] = 0;
-		self.buildminheap(self.q);
+		key[index("a")] = 0;
+		buildminheap(q);
 
-		while (self.q.size() > 1) {
-			String u = self.extract_min(self.q);
+		while (q.size() > 1) {
+			String u = extract_min(q);
+			for (int i = 0; i < e.length; i++) {
+				if (e[index(u)][i] != 0) {
+
+				}
+			}
 		}
 	}
 
-	private void add(String string, String string2, int i) {
+	private static void add(String string, String string2, int i) {
 		e[index(string2)][index(string)] = e[index(string)][index(string2)] = i;
 	}
 
@@ -109,13 +114,13 @@ public class PrimsAlgorithm {
 		}
 	}
 
-	private void buildminheap(ArrayList<String> q) {
+	private static void buildminheap(ArrayList<String> q) {
 		for (int i = q.size() / 2; i >= 1; i--) {
 			minheapify(q, i);
 		}
 	}
 
-	private void minheapify(ArrayList<String> q, int i) {
+	private static void minheapify(ArrayList<String> q, int i) {
 		int l = 2 * i;
 		int r = 2 * i + 1;
 		int smallest;
@@ -135,13 +140,13 @@ public class PrimsAlgorithm {
 		}
 	}
 
-	public String extract_min(ArrayList<String> q) {
+	public static String extract_min(ArrayList<String> q) {
 		String min = q.remove(1); // 1을 추출
 		buildminheap(q);// minheap으로 다시 만들어줌
 		return min;
 	}
 
-	private void insert(ArrayList<String> q, String v) {
+	private static void insert(ArrayList<String> q, String v) {
 		if (q.size() == 0) {
 			q.add(0, "");
 		}
