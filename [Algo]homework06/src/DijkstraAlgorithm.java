@@ -17,8 +17,6 @@ public class DijkstraAlgorithm {
 	}
 
 	public static void main(String[] args) {
-		System.out.println("dijkatra's algorithm.");
-		System.out.println();
 		DijkstraAlgorithm self = new DijkstraAlgorithm();
 		// d[v] 값의 계산이 완료된 점들의 집합
 		int[][] w = new int[5][5];
@@ -89,7 +87,6 @@ public class DijkstraAlgorithm {
 							Q.set(j, new V(Q.get(i).vertex,
 									d.get(index(u.vertex)) + w[index(u.vertex)][index(Q.get(i).vertex)]));
 							System.out.println("d[" + Q.get(j).vertex + "] = " + Q.get(j).cost);
-							break;
 						}
 					}
 

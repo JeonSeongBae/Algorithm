@@ -4,8 +4,6 @@ public class PrimsAlgorithm {
 	final static int infinity = Integer.MAX_VALUE;
 
 	public static void main(String[] args) {
-		System.out.println("Prims algorithm.");
-		System.out.println();
 		String[] v = new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "i" };
 		int[] key = new int[v.length];
 		int[][] w = new int[v.length][v.length];
@@ -40,7 +38,7 @@ public class PrimsAlgorithm {
 		self.add(w, "h", "i", 7);
 
 		for (int i = 0; i < v.length; i++) {
-			self.insert(q, key, v[i]);
+			self.insert(q, v[i]);
 		}
 		for (int i = 0; i < key.length; i++) {
 			key[i] = infinity;
@@ -52,11 +50,9 @@ public class PrimsAlgorithm {
 			String u = self.extract_min(q);
 			System.out.println("w<" + π[index(u)] + "," + u + "> = " + key[index(u)]);
 			for (int i = 0; i < w.length; i++) {
-				if (w[index(u)][i] != infinity) {
-					if (q.contains(vertex(i)) && w[index(u)][i] < key[i]) {
-						key[i] = w[index(u)][i];
-						π[i] = u;
-					}
+				if (w[index(u)][i] != infinity && q.contains(vertex(i)) && w[index(u)][i] < key[i]) {
+					key[i] = w[index(u)][i];
+					π[i] = u;
 				}
 			}
 			self.buildminheap(q, key);
@@ -148,11 +144,10 @@ public class PrimsAlgorithm {
 		return min;
 	}
 
-	private void insert(ArrayList<String> q, int[] key, String v) {
+	private void insert(ArrayList<String> q, String v) {
 		if (q.size() == 0) {
 			q.add(0, "");
 		}
 		q.add(v);
-		buildminheap(q, key);
 	}
 }
