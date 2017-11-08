@@ -9,6 +9,7 @@ public class PrimsAlgorithm {
 		String[] v = new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "i" };
 		int[] key = new int[v.length];
 		int[][] w = new int[v.length][v.length];
+		String[] π = new String[v.length];
 		ArrayList<String> q = new ArrayList<String>();
 		PrimsAlgorithm self = new PrimsAlgorithm();
 		for (int i = 0; i < w.length; i++) {
@@ -49,20 +50,17 @@ public class PrimsAlgorithm {
 
 		while (q.size() > 1) {
 			String u = self.extract_min(q);
+			System.out.println("w<" + π[index(u)] + "," + u + "> = " + key[index(u)]);
 			for (int i = 0; i < w.length; i++) {
-				// System.out.println(w[index(u)][i]);
-				// System.out.println(key[i]);
-				if (q.contains(vertex(i))) {
-					if (w[index(u)][i] < key[i]) {
+				if (w[index(u)][i] != infinity) {
+					if (q.contains(vertex(i)) && w[index(u)][i] < key[i]) {
 						key[i] = w[index(u)][i];
-						System.out.print(u + " "+vertex(i)+" ");
-						System.out.println(key[i]);
+						π[i] = u;
 					}
 				}
 			}
 			self.buildminheap(q, key);
 		}
-		System.out.println();
 	}
 
 	private void add(int[][] w, String string, String string2, int i) {
@@ -134,7 +132,7 @@ public class PrimsAlgorithm {
 		} else {
 			smallest = i;
 		}
-		if (r <= q.size() - 1 && key[index(q.get(r))] < key[index(q.get(smallest))]) {
+		if (r <= q.size() - 1 && key[index(q.get(r))] <= key[index(q.get(smallest))]) {
 			smallest = r;
 		}
 		if (smallest != i) {
