@@ -57,6 +57,11 @@ public class PrimsAlgorithm {
 			}
 			self.buildminheap(q, key);
 		}
+		int sum = 0;
+		for (int i = 0; i < key.length; i++) {
+			sum += key[i];
+		}
+		System.out.println("w<MST> = " + sum);
 	}
 
 	private void add(int[][] w, String string, String string2, int i) {
