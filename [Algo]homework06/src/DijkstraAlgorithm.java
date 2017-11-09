@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class DijkstraAlgorithm {
 	int queue_size = 0;
 	// 무한대를 표현
-	final static double infinity = Double.POSITIVE_INFINITY - 1;
+	final static double infinity = Double.POSITIVE_INFINITY;
 	// final static int infinity = Integer.MAX_VALUE;
 
 	public static class V {
