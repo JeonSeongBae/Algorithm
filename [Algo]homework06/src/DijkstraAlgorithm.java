@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class DijkstraAlgorithm {
 	int queue_size = 0;
 	// 무한대를 표현
-	final static double infinity = Double.POSITIVE_INFINITY - 1;
+	final static double infinity = Double.POSITIVE_INFINITY;
 	// final static int infinity = Integer.MAX_VALUE;
 
 	public static class V {
@@ -17,8 +17,6 @@ public class DijkstraAlgorithm {
 	}
 
 	public static void main(String[] args) {
-		System.out.println("dijkatra's algorithm.");
-		System.out.println();
 		DijkstraAlgorithm self = new DijkstraAlgorithm();
 		// d[v] 값의 계산이 완료된 점들의 집합
 		int[][] w = new int[5][5];
@@ -89,7 +87,6 @@ public class DijkstraAlgorithm {
 							Q.set(j, new V(Q.get(i).vertex,
 									d.get(index(u.vertex)) + w[index(u.vertex)][index(Q.get(i).vertex)]));
 							System.out.println("d[" + Q.get(j).vertex + "] = " + Q.get(j).cost);
-							break;
 						}
 					}
 
