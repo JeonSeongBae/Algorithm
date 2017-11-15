@@ -26,7 +26,6 @@ public class accountMain {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println();
 		System.out.println("<로그인>");
-		
 		System.out.println("ID:");
 		String id = scanner.nextLine();
 		
