@@ -18,7 +18,9 @@ public class knapsackProblem {
 		// Array of items
 		items = new int[n + 1][2];
 
-		// Insert value and weight
+		/*
+		 * Insert value and weight / Don't use index 0
+		 */
 		for (int i = 1; i < n + 1; i++) {
 			// Value of item
 			int value = scanner.nextInt();
@@ -35,6 +37,15 @@ public class knapsackProblem {
 
 	}
 
+	// Fill out 0-1 knapsack
+	private static void fillOpt() {
+		for (int i = 0; i < opt.length; i++) {
+			for (int j = 0; j < opt[0].length; j++) {
+				opt[i][j] = opt(i, j);
+			}
+		}
+	}
+
 	private static int opt(int i, int w) {
 		if (i == 0) {
 			return 0;
@@ -45,21 +56,12 @@ public class knapsackProblem {
 		}
 	}
 
-	// Fill out 0-1 knapsack
-	private static void fillOpt() {
-		for (int i = 0; i < opt.length; i++) {
-			for (int j = 0; j < opt[0].length; j++) {
-				opt[i][j] = opt(i, j);
-			}
-		}
-	}
-
 	// Print opt
 	private static void printItem() {
 		int max = 0;
 		for (int i = 0; i < opt.length; i++) {
 			for (int j = 0; j < opt[0].length; j++) {
-				System.out.printf("\t%d", opt[i][j]);
+				System.out.printf(" %d", opt[i][j]);
 				if (max < opt[i][j]) {
 					max = opt[i][j];
 				}
