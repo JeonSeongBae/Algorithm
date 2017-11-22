@@ -11,10 +11,8 @@ public class SequenceAlignment {
 
 	public static void main(String[] args) {
 		scanner = new Scanner(System.in);
-		// String string1 = " " + scanner.nextLine();
-		// String string2 = " " + scanner.nextLine();
-		String string1 = " CTGACCTACCT";
-		String string2 = " CCTGACTACAT";
+		String string1 = " " + scanner.nextLine();
+		String string2 = " " + scanner.nextLine();
 
 		char[] x = string1.toCharArray();
 		char[] y = string2.toCharArray();
@@ -73,6 +71,7 @@ public class SequenceAlignment {
 				System.out.printf("%3d", M[i][j]);
 			}
 			System.out.println();
+
 		}
 	}
 
