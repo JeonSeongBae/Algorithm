@@ -14,25 +14,14 @@ public class optimalBinarySearchTree {
 	static int[][] root;
 	static int n;
 
-	public static class Node {
-		double cost;
-
-		public Node(double cost) { // 빈 노드
-			this.cost = cost;
-		}
-	}
-
 	public static void main(String[] args) throws IOException {
 		p = new ArrayList<Double>();
 		q = new ArrayList<Double>();
 		String fp = "data11.txt";
-		n = fileRead(fp);
+		fileRead(fp);
 		e = new double[n + 1][n + 1];
 		w = new double[n + 1][n + 1];
 		root = new int[n + 1][n + 1];
-		double[][] tempe = e;
-		double[][] tempw = w;
-		int[][] temproot = root;
 		for (int i = 0; i <= n; i++) {
 			for (int j = 0; j <= n; j++) {
 				e[i][j] = -1;
@@ -45,6 +34,12 @@ public class optimalBinarySearchTree {
 	}
 
 	private static void print() {
+		System.out.print("          ");
+		System.out.printf("p\t  q\n");
+		for (int i = 0; i < p.size(); i++) {
+			System.out.printf("%4d\t%5.2f\t%5.2f\n", i, p.get(i), q.get(i));
+		}
+
 		System.out.println("----------------------------------------------------------------");
 		System.out.println("e(i,j) : ");
 		System.out.print("         ");
@@ -93,9 +88,6 @@ public class optimalBinarySearchTree {
 	}
 
 	private static void optimalBst(ArrayList<Double> p, ArrayList<Double> q, int n) {
-		double[][] tempe = e;
-		double[][] tempw = e;
-		double[][] temproot = e;
 
 		for (int i = 1; i < n + 1; i++) {
 			e[i][i - 1] = q.get(i - 1);
@@ -120,12 +112,11 @@ public class optimalBinarySearchTree {
 		}
 	}
 
-	private static int fileRead(String fp) throws IOException {
+	private static void fileRead(String fp) throws IOException {
 		// fileReader
 		FileInputStream fis = new FileInputStream(fp);
 		InputStreamReader isr = new InputStreamReader(fis, "euc-kr");
 		BufferedReader br = new BufferedReader(isr);
-		int n = 0;
 		String line = br.readLine();
 		StringTokenizer st = new StringTokenizer(line, " ");
 
@@ -142,6 +133,5 @@ public class optimalBinarySearchTree {
 		}
 		fis.close();
 		isr.close();
-		return n;
 	}
 }
