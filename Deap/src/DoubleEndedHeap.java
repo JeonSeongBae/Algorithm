@@ -1,12 +1,10 @@
 
-public class deap {
+public class DoubleEndedHeap {
 	int[] deap;
-	int n = 0;
-	int deap_Size;
+	int elements = 0;
 
-	public deap() {
-		deap_Size = 14;
-		deap = new int[deap_Size];
+	public DoubleEndedHeap() {
+		deap = new int[14];
 	}
 
 	// Returns true if index i is in max-heap, false otherwise.
@@ -24,7 +22,7 @@ public class deap {
 		Double exponent = Math.floor(Math.log(pos + 1) / Math.log(2)) - 1;
 		int temp = (int) (pos + Math.pow(2, exponent));
 		// Return the parent of the index location if there is no partner
-		if (temp > n)
+		if (temp > elements)
 			return (temp - 1) / 2;
 		return temp;
 	}
@@ -51,16 +49,16 @@ public class deap {
 
 	// Return the max value by deleting it
 	public int deleteMax() {
-		int temp = deap[n];// Temporarily save last element
+		int temp = deap[elements];// Temporarily save last element
 		int i = 2; // maxindex
 		int max = deap[i];// Remove min value
-		deap[n--] = 0;// Remove last element
+		deap[elements--] = 0;// Remove last element
 
-		if (n < 2) {// maxheap has no elements
+		if (elements < 2) {// maxheap has no elements
 			System.out.println("The deap is empty");
 			return 0;
 		}
-		while (2 * i + 1 < n) {
+		while (2 * i + 1 < elements) {
 			if (deap[2 * i + 1] > deap[2 * i + 2]) {// left child is bigger than right child
 				deap[i] = deap[2 * i + 1];
 				i = 2 * i + 1;
@@ -95,15 +93,15 @@ public class deap {
 
 	// Return the min value by deleting it
 	public int deleteMin() {
-		if (n < 1) {// Missing element in minheap
+		if (elements < 1) {// Missing element in minheap
 			System.out.println("The deap is empty");
 			return 0;
 		}
-		int temp = deap[n];// Store last element in temp
-		deap[n--] = 0;// Remove last element
+		int temp = deap[elements];// Store last element in temp
+		deap[elements--] = 0;// Remove last element
 		int i = 1;// minindex
 		int min = deap[i];// Remove min value
-		while (2 * i + 1 < n) {
+		while (2 * i + 1 < elements) {
 			if (deap[2 * i + 1] < deap[2 * i + 2]) {// When the left child is smaller
 				deap[i] = deap[2 * i + 1];
 				i = 2 * i + 1;
@@ -123,29 +121,29 @@ public class deap {
 
 	// Insert x
 	public void insert(int x) {
-		if (n == deap.length - 1) {
+		if (elements == deap.length - 1) {
 			System.out.println("The heap is full");
 			System.exit(1);
 		}
-		if (++n == 1) {// When inserting the first element
+		if (++elements == 1) {// When inserting the first element
 			deap[1] = x;
 			return;
 		}
-		if (inMaxHeap(n)) {// Make sure index is in maxHeap
-			int i = minPartner(n);
+		if (inMaxHeap(elements)) {// Make sure index is in maxHeap
+			int i = minPartner(elements);
 			if (x < deap[i]) {// Compares values with minPartner, and if less, relocates
-				deap[n] = deap[i];
+				deap[elements] = deap[i];
 				minInsert(i, x);
 			} else {
-				maxInsert(n, x);
+				maxInsert(elements, x);
 			}
 		} else {
-			int i = maxPartner(n);
+			int i = maxPartner(elements);
 			if (x > deap[i]) {// Compares the value with maxPartner, and if it is bigger, it changes position
-				deap[n] = deap[i];
+				deap[elements] = deap[i];
 				maxInsert(i, x);
 			} else {
-				minInsert(n, x);
+				minInsert(elements, x);
 			}
 		}
 	}
@@ -155,7 +153,7 @@ public class deap {
 		int levelNum = 2;
 		int thisLevel = 0;
 		int gap = 8;
-		for (int i = 1; i <= n; i++) {
+		for (int i = 1; i <= elements; i++) {
 			for (int j = 0; j < gap - 1; j++) {
 				System.out.print(" ");
 			}
@@ -183,33 +181,33 @@ public class deap {
 	}
 
 	public static void main(String[] argv) {
-		deap a = new deap();
+		DoubleEndedHeap doubleenedheap = new DoubleEndedHeap();
 
-		int[] data = { 4, 65, 8, 9, 48, 55, 10, 19, 20, 30, 15, 25, 50 };
-		for (int i = 0; i < data.length; i++) {
-			a.insert(data[i]);
+		int[] heapElement = { 4, 65, 8, 9, 48, 55, 10, 19, 20, 30, 15, 25, 50 };
+		for (int i = 0; i < heapElement.length; i++) {
+			doubleenedheap.insert(heapElement[i]);
 		}
 
 		System.out.println("initial Deap");
-		a.print();
+		doubleenedheap.print();
 		System.out.println("delete Min");
-		a.deleteMin();
-		a.print();
+		doubleenedheap.deleteMin();
+		doubleenedheap.print();
 		System.out.println("delete Min");
-		a.deleteMin();
-		a.print();
+		doubleenedheap.deleteMin();
+		doubleenedheap.print();
 		System.out.println("delete Min");
-		a.deleteMin();
-		a.print();
+		doubleenedheap.deleteMin();
+		doubleenedheap.print();
 		System.out.println("delete Max");
-		a.deleteMax();
-		a.print();
+		doubleenedheap.deleteMax();
+		doubleenedheap.print();
 		System.out.println("delete Max");
-		a.deleteMax();
-		a.print();
+		doubleenedheap.deleteMax();
+		doubleenedheap.print();
 		System.out.println("delete Max");
-		a.deleteMax();
-		a.print();
+		doubleenedheap.deleteMax();
+		doubleenedheap.print();
 
 	}
 }
