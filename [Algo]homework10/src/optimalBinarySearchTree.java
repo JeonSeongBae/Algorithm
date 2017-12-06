@@ -48,7 +48,7 @@ public class optimalBinarySearchTree {
 		}
 		System.out.println();
 		for (int i = 0; i <= n; i++) {
-			System.out.printf("%4d\t", i);
+			System.out.printf("%5d\t", i);
 
 			for (int j = 0; j <= n; j++) {
 				System.out.printf("%5.2f\t", e[i][j]);
@@ -64,7 +64,7 @@ public class optimalBinarySearchTree {
 		}
 		System.out.println();
 		for (int i = 0; i <= n; i++) {
-			System.out.printf("%4d\t", i);
+			System.out.printf("%5d\t", i);
 
 			for (int j = 0; j <= n; j++) {
 				System.out.printf("%5.2f\t", w[i][j]);
