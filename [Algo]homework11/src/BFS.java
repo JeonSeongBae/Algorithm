@@ -4,7 +4,7 @@ import java.util.Queue;
 
 public class BFS {
 	final static int infinity = Integer.MAX_VALUE;
-	static String NIL = "";
+	static String NIL = " ";
 	static ArrayList<Graph> G;
 	static Queue<String> Q;
 	static boolean[][] edge;
@@ -25,6 +25,7 @@ public class BFS {
 
 	public static void main(String[] args) {
 		G = new ArrayList<>();
+		ArrayList<Graph> tempG = G;
 		String[] vertexes = { "r", "s", "t", "u", "v", "w", "x", "y" };
 		edge = new boolean[vertexes.length][vertexes.length];
 		for (int i = 0; i < vertexes.length; i++) {
@@ -45,6 +46,8 @@ public class BFS {
 		String s = "s";
 
 		bfs(G, s);
+
+		print(G);
 	}
 
 	private static void add(String src, String des) {
@@ -97,6 +100,15 @@ public class BFS {
 			return -1;
 		}
 	}
+
+	private static void print(ArrayList<Graph> G) {
+		for (int i = 0; i < G.size(); i++) {
+			System.out.print(G.get(i).V + "->");
+			System.out.print(G.get(i).pi + " : ");
+			System.out.println(G.get(i).d);
+		}
+	}
+
 
 	public static void bfs(ArrayList<Graph> G, String s) {
 		for (int i = 0; i < G.size(); i++) {
