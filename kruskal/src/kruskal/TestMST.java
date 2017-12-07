@@ -1,6 +1,5 @@
 package kruskal;
 
-
 public class TestMST {
 
 	public static void main(String[] args) {

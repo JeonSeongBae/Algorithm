@@ -11,8 +11,6 @@ public class sequenceAlignment {
 	// The Mismatches cost is fixed at 2
 	static int αCost = 2;
 
-	static String[] ArrowPath = new String[1024];
-
 	public static void main(String[] args) {
 
 		scanner = new Scanner(System.in);
@@ -34,17 +32,22 @@ public class sequenceAlignment {
 		printM(x, y);
 	}
 
+	static String[] ArrowPath = new String[1024];
+
 	private static void align(char[] x, char[] y) {
 		int n = x.length;
 		int m = y.length;
-		if (n < 2 || m < 2) {
+		if (n <= 2 || m <= 2) {
 			// use standard alignment
+			
 		}
-		YPrefix = AllYPrefixCosts(x, n / 2, y);
-		YSuffix = AllYSuffixCosts(x, n / 2, y);
-		int cost;
+		int[] YPrefix = AllYSuffixCosts(x, n / 2, y);
+		int[] YSuffix = AllYPrefixCosts(x, n / 2, y);
+
+		int cost = 0;
 		int best = 0;
-		int bestq;
+		int bestq = 0;
+
 		for (int q = 0; q < m; q++) {
 			cost = YPrefix[q] + YSuffix[q];
 			if (cost < best) {
@@ -52,12 +55,25 @@ public class sequenceAlignment {
 				best = cost;
 			}
 		}
+
 		ArrowPath = Add(n / 2, bestq);
 		align(x, y);
 		align(x, y);
 	}
 
-	private static Object AllYPrefixCosts(char[] x, int i, char[] y) {
+
+	private static int[] AllYPrefixCosts(char[] x, int i, char[] y) {
+		
+		return null;
+	}
+
+	private static int[] AllYSuffixCosts(char[] x, int i, char[] y) {
+
+		return null;
+	}
+
+	private static String[] Add(int i, int bestq) {
+
 		return null;
 	}
 
