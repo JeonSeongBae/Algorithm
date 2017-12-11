@@ -25,7 +25,6 @@ public class BFS {
 
 	public static void main(String[] args) {
 		G = new ArrayList<>();
-		ArrayList<Graph> tempG = G;
 		String[] vertexes = { "r", "s", "t", "u", "v", "w", "x", "y" };
 		edge = new boolean[vertexes.length][vertexes.length];
 		for (int i = 0; i < vertexes.length; i++) {
@@ -103,12 +102,12 @@ public class BFS {
 
 	private static void print(ArrayList<Graph> G) {
 		for (int i = 0; i < G.size(); i++) {
-			System.out.print(G.get(i).V + "->");
-			System.out.print(G.get(i).pi + " : ");
-			System.out.println(G.get(i).d);
+			Graph g = G.get(i);
+			System.out.print("정점:" + g.V + " -> ");
+			System.out.print("부모:" + g.pi + "\n");
+			System.out.printf("정점의 비용:%2d\n\n", g.d);
 		}
 	}
-
 
 	public static void bfs(ArrayList<Graph> G, String s) {
 		for (int i = 0; i < G.size(); i++) {
