@@ -49,34 +49,15 @@ public class DFS {
 	private static void print(ArrayList<Graph> G) {
 		for (int i = 0; i < G.size(); i++) {
 			Graph g = G.get(i);
-			System.out.print(g.V + "->");
-			System.out.print(g.pi + " : ");
-			System.out.printf("%2d/%2d\n", g.d, g.f);
+			System.out.print("정점:" + g.V + " -> ");
+			System.out.print("부모:" + g.pi + "\n");
+			System.out.printf("발견된 시간:%2d\n완료된 시간:%2d\n\n", g.d, g.f);
 		}
 	}
 
 	private static void add(String src, String des) {
 		edge[index(src)][index(des)] = true;
 	}
-
-	// private static String vertex(int index) {
-	// switch (index) {
-	// case 0:
-	// return "u";
-	// case 1:
-	// return "v";
-	// case 2:
-	// return "w";
-	// case 3:
-	// return "x";
-	// case 4:
-	// return "y";
-	// case 5:
-	// return "z";
-	// default:
-	// return "";
-	// }
-	// }
 
 	private static int index(String vertex) {
 		switch (vertex) {
