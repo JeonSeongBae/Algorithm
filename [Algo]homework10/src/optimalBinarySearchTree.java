@@ -93,7 +93,7 @@ public class optimalBinarySearchTree {
 			e[i][i - 1] = q.get(i - 1);
 			w[i][i - 1] = q.get(i - 1);
 		}
-		for (int l = 1; l <= n; l++) {
+		for (int l = 1; l < n; l++) {
 			for (int i = 1; i < n - l + 1; i++) {
 				int j = i + l - 1;
 				e[i][j] = infinity;
@@ -106,7 +106,6 @@ public class optimalBinarySearchTree {
 						e[i][j] = t;
 						root[i][j] = r;
 					}
-
 				}
 			}
 		}
